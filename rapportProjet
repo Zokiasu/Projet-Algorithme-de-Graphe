@@ -1,0 +1,91 @@
+\documentclass[a4]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{amsmath}
+
+\author{TAILY Pierrick 21600098– GAIZI Hasnae 21807397 – AKROUNE Feriel 21807878}
+\title{Rapport du projet Metro}
+\date{06 mai 2020}
+
+\begin{document}
+\maketitle
+\section{Implémentation}
+
+On a choisit d'utiliser le langage C afin de réaliser le projet.\newline
+
+\section{Démarche du projet}
+-Introduire deux stations de métro différentes  
+-Vérifier que les stations font partis de celles existantes 
+-Chercher tous les chemins possibles qui existent 
+-Définir le chemin le plus court parmi les autres chemins 
+-Afficher le trajet le plus optimal  . \newline
+
+\section{Structures de données}
+ les structures ont été déclarées dans le fichier \textit{graph.h}. \newline
+ 
+ \textbf{ elem }
+Liste toutes les stations du réseau .\newline
+
+\textbf{SUBWAY} contient le graphe qui représente  le réseau parisien .\newline
+
+\textbf{GRAPH}
+Un tableau avec 2 stations à choisir par l’utilisateur .\newline
+nb_point: nombres total des stations .\newline
+*station: tableau des stations (nom et num de ligne) .\newline
+**system: tableau 2d (tmp du trajet pour chaque chemin) .\newline
+
+\textbf{POINT} 
+Représente le sommet \newline
+Contient des informations concernant la station \newline
+nom_station: Son nom .\newline
+number_station: Son id  .\newline
+number_link: Son numéro dans le réseau de metro  .\newline
+
+\textbf{PATH} 
+Représente le chemin entre deux stations 
+terminal: la station du terminus (son numéro)  .\newline
+timeSec: le temps en seconde du chemin  .\newline
+
+\textbf{DIJKSTRA}
+Calcul et stock le plus court chemin possible \newline
+link_start:id de station de départ .\newline
+link_end:id de station d’arrivée .\newline
+duration:durée entre station de départ et station d’arrivée .\newline
+
+\section{Principale procédure : Algorithme Dijkstra}
+L'implémentation de l'algorithme de Dijkstra a été réalisée avec un tas binaire pour obtenir une complexité logarithmique.
+Le tas binaire est stocké sous forme de tableau et est utilisé comme une file de priorité.\newline
+ 
+
+\section{Fonctionnement de l'Algorithme Dijkstra}
+\begin{itemize}
+\item On stocke le fait que aucune station n'ait été traité, aucune 
+station n'ait encore de père, les plus petites distances sont encore indéfinis.\newline 
+\item On traite la station de départ et on met à jour les plus petites distances 
+avec ses successeurs en utilisant les temps en secondes. \newline
+\item Tant qu'on a des stations à traiter, on prend la plus petite des plus petites distances  et on regarde si on peut amélioré les plus petites distances de ces successeurs en passant par ce sommet. Si c'est le cas alors ce dernier devient son père. \newline
+\item Le tableau des pères est alors initialisé complétement.
+\end{itemize}
+
+\section{Fonctionnement général}
+Tout d'abord, on initialise les différentes variables que l'on va utiliser pour lancer nos différents fonctions ensuite on initialise le graphe du metro avec "init\_subway" grâce au nombre de station qu'on a récupérer précédemment avec "count\_nb\_points". Les chemins sont initialisé à nul au début.\newline
+
+Le tableau des stations est alors initialisé pour contenir les informations de chaque station (le nom de la station, l'id de la station, le numéro de sa ligne). Ce processus est réalisé par la fonction "init\_station".\newline
+
+Le tableau des chemins entre les stations est aussi initialisé avec le numéro du terminus et le temps en seconde de chaque chemin. Sachant que le metro est à double sens, le chemins opposé est également initialisé avec le même temps en seconde mais avec le terminus opposé. Ce processus est réalisé par la fonction "init\_system".\newline
+
+Suite à cela on demande à l'utilisateur d'entré la gare à partir de laquelle il souhaite partir.\newline
+
+Une fois que l'utilisateur valide la gare de départ, on vérifie que son entré, qui peut soit être le nom de la station ou son id, correspond aux gares récupérer dans le fichier metro.txt puis l'id de la gare est stocké dans une variable.\newline
+
+Ensuite on demande à l'utilisateur d'entré la gare d'arrivé où il souhaite se rendre et on répète le processus de vérification et de stockage de la donnée.\newline
+
+Puis on lance la fonction "operation\_short\_way" qui va calculer le plus court chemin entre la station de départ et la station d'arrivé avec la fonction "operation\_dijkstra" puis écrit dans le terminal le plus court chemin avec la fonction "write\_way".\newline
+
+Finalement, la mémoire est libérée grâce au fonction "free" pour les variables initialisé au début, "free\_graph" pour libérer la mémoire de la structure graph ainsi que "free\_way\_dijkstra" qui libère la mémoire stocker par l'initialisation de la structure dijkstra dansla fonction "operation\_dijkstra".\newline
+
+
+\end{document}
